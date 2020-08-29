@@ -16,7 +16,13 @@
 # 자유로운 객체 그래프 탐색
 1. 동일한 트랜잭션에서 조회한 엔티티는 같음을 보장
 
-# JPA의 성능 최적화 기능
-1. 1차 캐시와 동일성(identity) 보장
-2. 트랜잭션을 지원하는 쓰기 지연(transactional write-behind)
-3. 지연 로딩(Lazy Loading)
+
+# 영속성 컨텍스트(Persistence Context)의 이점
+1. 1차 캐시
+    * Entity Manager 내부에서 관리
+    * EntityManager -> find 수행 시 1차 캐시에서 우선적으로 조회
+        > 만약 캐시에 원하는 데이터가 없을 경우 DB 조회 후 캐시에 저장하고 이를 반환 
+2. 동일성(identity) 보장
+3. 트랜잭션을 지원하는 쓰기 지연(transactional write-behind)
+4. 변경 감지(Dirty Checking)
+5. 지연 로딩(Lazy Loading)
