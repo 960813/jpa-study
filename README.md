@@ -8,6 +8,9 @@
 # JPA 내부 동작 방식 이해
 1. JPA가 어떤 SQL을 만들어 내는가?
 2. JPA가 언제 SQL을 실행하는가?
+    * EntityManager->flush() 호출
+    * EntityManager->commit() 호출 (flush 자동 호출)
+    * JPQL 쿼리 실행 (flush 자동 호출)
 
 # 객체를 중심으로 생각해보자
 
@@ -16,8 +19,7 @@
 # 자유로운 객체 그래프 탐색
 1. 동일한 트랜잭션에서 조회한 엔티티는 같음을 보장
 
-
-# 영속성 컨텍스트(Persistence Context)의 이점
+# Persistence Context 이점
 1. 1차 캐시
     * Entity Manager 내부에서 관리
     * EntityManager -> find 수행 시 1차 캐시에서 우선적으로 조회
@@ -26,3 +28,6 @@
 3. 트랜잭션을 지원하는 쓰기 지연(transactional write-behind)
 4. 변경 감지(Dirty Checking)
 5. 지연 로딩(Lazy Loading)
+
+# Persistence Context 관련 Method
+* EntityManager->clear() : 영속성 컨텍스트 초기화
