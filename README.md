@@ -9,6 +9,7 @@
     * EntityManager->flush() 호출
     * EntityManager->commit() 호출 (flush 자동 호출)
     * JPQL 쿼리 실행 (flush 자동 호출)
+    > 단, @GeneratedValue 에서 IDENTITY 전략을 사용할 경우 persist 시점에서 SQL 실행 
 
 # Persistence Context 이점
 1. 1차 캐시
@@ -53,6 +54,9 @@
 | length(DDL) | 문자 길이 제약조건, String 타입에만 사용 | 255
 | precision, scale(DDL) | BigDecimal 타입에서 사용(BigInteger 에서도 사용 가능). precision은 소수점을 포함한 전체 자릿수를, scale은 소수의 자릿수. double, float 타입에는 적용되지 않는다. 아주 큰 숫자나 정밀한 소수를 다뤄야할 때만 사용. | precision=19,<br/>scale=2
 
+# hibernate.dialect 옵션에 따라 달라지는 SQL
+* ORACLE, MySQL 등 선택한 DB에 따라 SQL이 유연하게 변화(EX. VARCHAR, VARCHAR2)
+
 # hibernate.hbm2ddl.auto 옵션
 * create: 기존 테이블 삭제 후 다시 생성(DROP + CREATE)
 * create-drop: create와 같으나 종료 시점에서 테이블 DROP
@@ -61,9 +65,14 @@
 * none: 사용하지 않음
 > 운영 장비에는 절대 create, create-drop, update 사용하지 말자.
 
-# hibernate.dialect 옵션에 따라 달라지는 SQL
-* ORACLE, MySQL 등 선택한 DB에 따라 SQL이 유연하게 변화(EX. VARCHAR, VARCHAR2)
-
 # DDL 생성 기능
 * @Table Annotation은 JPA의 Runtime에 영향을 미친다.
 * @Column Annotation의 unique, length, nullable 등은 JPA의 Runtime에 영향을 미치지 않는다.
+
+# 기본키 매핑 방법
+* 직접 할당 : @Id 사용
+* @GenerateValue의 strategy
+    - IDENTITY : 기본 키 생성을 데이터베이스에 위임()
+    - SEQUENCE
+    - TABLE
+    - AUTO
