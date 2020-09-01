@@ -4,11 +4,11 @@ import javax.persistence.*;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name="USERNAME")
+    @Column(name = "USERNAME")
     private String username;
 
 //    @Column(name = "TEAM_ID")
@@ -40,5 +40,10 @@ public class Member {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
     }
 }
