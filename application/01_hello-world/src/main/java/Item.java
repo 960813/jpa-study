@@ -2,12 +2,12 @@ import javax.persistence.*;
 
 // JPA는 상속관계를 매핑할 때 기본적으로 SINGLE_TABLE 전략을 사용한다
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn
-public class Item {
+public abstract class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String name;
