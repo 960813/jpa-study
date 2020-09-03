@@ -15,35 +15,19 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
+            Movie movie = new Movie();
+            movie.setDirector("A");
+            movie.setActor("B");
+            movie.setName("C");
+            movie.setPrice(10000);
 
-            Member member = new Member();
-            member.setUsername("member1");
-            em.persist(member);
+            em.persist(movie);
 
-            // 순수 객체 상태를 고려해서 항상 양쪽에 값을 설정하자
-            // Member->setTeam(), team.getMembers().add(member) 두 번을 호출하는게 번거롭다.
-            // 연관관계 편의 메소드를 생성하는걸 권장.
-//            team.getMembers().add(member); // **
+            em.flush();
+            em.clear();
 
-            // 연관관계 편의 메소드
-            // Team, Member 둘 중 한 곳에만 놔두기.
-            team.addMember(member);
-
-            // 양방향 매핑시 무한 루프가 발생할 수 있다.
-            // EX> toString(), lombok, JSON 생성 라이브러리 등
-
-//            em.flush();
-//            em.clear();
-
-            Team findTeam = em.find(Team.class, team.getId()); // 1차 캐시
-            List<Member> members = findTeam.getMembers();
-
-            for (Member m : members) {
-                System.out.println("m = " + m.getUsername());
-            }
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println("findMovie = " + findMovie);
 
             tx.commit();
         } catch (Exception e) {
