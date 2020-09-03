@@ -2,7 +2,7 @@ import javax.persistence.*;
 
 // JPA는 상속관계를 매핑할 때 기본적으로 SINGLE_TABLE 전략을 사용한다
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
 public class Item {
 
