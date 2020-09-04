@@ -1,9 +1,11 @@
-import org.hibernate.jpa.internal.PersistenceUnitUtilImpl;
+import domain.Member;
+import domain.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JpaMain {
 
@@ -28,9 +30,8 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            Member findMember = em.find(Member.class, member.getId());
-
-            System.out.println("m = " + findMember.getTeam().getClass());
+            List<Member> members = em.createQuery("select m from Member m", Member.class)
+                    .getResultList();
 
             tx.commit();
         } catch (Exception e) {
