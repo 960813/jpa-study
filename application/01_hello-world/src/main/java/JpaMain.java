@@ -1,4 +1,6 @@
+import domain.Child;
 import domain.Member;
+import domain.Parent;
 import domain.Team;
 
 import javax.persistence.EntityManager;
@@ -18,20 +20,15 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
 
-            Member member = new Member();
-            member.setUsername("hello");
-            member.setTeam(team);
-            em.persist(member);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            em.flush();
-            em.clear();
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-            List<Member> members = em.createQuery("select m from Member m", Member.class)
-                    .getResultList();
+            em.persist(parent);
 
             tx.commit();
         } catch (Exception e) {
